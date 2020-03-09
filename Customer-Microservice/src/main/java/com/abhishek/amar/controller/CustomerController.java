@@ -1,0 +1,96 @@
+/**
+ * 
+ */
+package com.abhishek.amar.controller;
+
+import java.util.Date;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.client.RestTemplate;
+
+import com.abhishek.amar.entity.CustomerEntity;
+import com.abhishek.amar.response.Response;
+import com.abhishek.amar.service.CustomerService;
+
+/**
+ * @author Abhishek Amar
+ *
+ */
+@RestController
+@RequestMapping(value = "customer")
+public class CustomerController {
+	@Autowired
+	private CustomerService customerService;
+	@Value("${customer.save.success}")
+	private String successMessage; 
+
+	/**
+	 * 
+	 * @param customer
+	 * @return
+	 */
+	@PostMapping()
+	public ResponseEntity<Object> saveCustomerDetails(@RequestBody CustomerEntity customer) {
+		Response response = new Response(customerService.saveCustomerDetails(customer), HttpStatus.OK, new Date(),
+				successMessage); 
+		return new ResponseEntity<>(response, HttpStatus.OK);
+	}
+
+	/**
+	 * 
+	 * @return
+	 */
+	@GetMapping()
+	public ResponseEntity<Object> fetchAllCustomerDetails() {
+		Response response = new Response(customerService.fetchAllCustomerDetails(), HttpStatus.OK, new Date(),
+				successMessage);
+		return new ResponseEntity<>(response, HttpStatus.OK);
+	}
+
+	/**
+	 * 
+	 * @param customerId
+	 * @return
+	 */
+	@GetMapping("/{customerId}")
+	public ResponseEntity<Object> getCustomerById(@PathVariable("customerId") Integer customerId) {
+		Response response = new Response(customerService.getCustomerDetailsById(customerId), HttpStatus.OK, new Date(),
+				successMessage);
+		return new ResponseEntity<>(response, HttpStatus.OK);
+	}
+
+	/**
+	 * 
+	 * @param customer
+	 * @return
+	 */
+	@PutMapping()
+	public ResponseEntity<Object> updateCustomerDetails(@RequestBody CustomerEntity customer) {
+		Response response = new Response(customerService.updateCustomerDetails(customer), HttpStatus.OK, new Date(),
+				successMessage);
+		return new ResponseEntity<>(response, HttpStatus.OK);
+	}
+
+	/**
+	 * 
+	 * @param id
+	 * @return
+	 */
+	@DeleteMapping("/{deleteId}")
+	public ResponseEntity<Object> deleteCustomerDetails(@PathVariable("deleteId") Integer id) {
+		customerService.delete(id);
+		Response response = new Response(null, HttpStatus.OK, new Date(), successMessage);
+		return new ResponseEntity<>(response, HttpStatus.OK);
+	}
+}
