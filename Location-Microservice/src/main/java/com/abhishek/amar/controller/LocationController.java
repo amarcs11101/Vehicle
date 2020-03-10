@@ -24,7 +24,7 @@ public class LocationController {
 	@Value("${google.location.api}")
 	private String locationApi;
 
-	@Value("${google.api.key}")
+	@Value("${api.key}")
 	private String apiKey;
 
 	@Value("${google.distance.api}")
