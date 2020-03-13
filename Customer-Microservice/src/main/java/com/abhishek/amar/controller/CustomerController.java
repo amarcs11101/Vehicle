@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
 import com.abhishek.amar.entity.CustomerEntity;
+import com.abhishek.amar.exception.CustomerExceptions;
 import com.abhishek.amar.response.Response;
 import com.abhishek.amar.service.CustomerService;
 
@@ -28,22 +29,22 @@ import com.abhishek.amar.service.CustomerService;
  *
  */
 @RestController
-@RequestMapping(value = "customer")
+@RequestMapping(value = "/customer")
 public class CustomerController {
 	@Autowired
 	private CustomerService customerService;
 	@Value("${customer.save.success}")
-	private String successMessage; 
+	private String successMessage;
 
 	/**
 	 * 
 	 * @param customer
 	 * @return
 	 */
-	@PostMapping()
+	@PostMapping("/save")
 	public ResponseEntity<Object> saveCustomerDetails(@RequestBody CustomerEntity customer) {
 		Response response = new Response(customerService.saveCustomerDetails(customer), HttpStatus.OK, new Date(),
-				successMessage); 
+				successMessage);
 		return new ResponseEntity<>(response, HttpStatus.OK);
 	}
 
@@ -51,7 +52,7 @@ public class CustomerController {
 	 * 
 	 * @return
 	 */
-	@GetMapping()
+	@GetMapping("/find")
 	public ResponseEntity<Object> fetchAllCustomerDetails() {
 		Response response = new Response(customerService.fetchAllCustomerDetails(), HttpStatus.OK, new Date(),
 				successMessage);
@@ -75,7 +76,7 @@ public class CustomerController {
 	 * @param customer
 	 * @return
 	 */
-	@PutMapping()
+	@PutMapping("/update")
 	public ResponseEntity<Object> updateCustomerDetails(@RequestBody CustomerEntity customer) {
 		Response response = new Response(customerService.updateCustomerDetails(customer), HttpStatus.OK, new Date(),
 				successMessage);
@@ -93,4 +94,12 @@ public class CustomerController {
 		Response response = new Response(null, HttpStatus.OK, new Date(), successMessage);
 		return new ResponseEntity<>(response, HttpStatus.OK);
 	}
+
+	@GetMapping("/active/driver")
+	public ResponseEntity<Object> getActiveDriver() {
+		Response response = new Response(customerService.getAllActiveDriver(), HttpStatus.OK, new Date(),
+				successMessage);
+		return new ResponseEntity<>(response, HttpStatus.OK);
+	}
+
 }

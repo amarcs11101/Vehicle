@@ -51,7 +51,7 @@ public class LocationController {
 	 * 
 	 * @return
 	 */
-	@GetMapping()
+	@GetMapping("/distance")
 	public ResponseEntity<String> getDistanceBetweenAllLatitudeAndLongitude() {
 		String result = restTemplate.getForObject(distanceApi, String.class);
 		return new ResponseEntity<>(result, HttpStatus.OK);

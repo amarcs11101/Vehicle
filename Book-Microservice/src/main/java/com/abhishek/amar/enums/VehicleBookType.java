@@ -8,5 +8,5 @@ package com.abhishek.amar.enums;
  *
  */
 public enum VehicleBookType {
-	VEHICLE_BOOKED , VEHICLE_CANCELLED , VEHICLE_INACTIVE , VEHICLE_FREE 
+	VEHICLE_BOOKED , VEHICLE_CANCELLED , VEHICLE_INACTIVE  ,VEHICLE_FREE 
 }

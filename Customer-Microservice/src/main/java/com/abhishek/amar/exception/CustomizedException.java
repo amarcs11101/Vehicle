@@ -3,8 +3,6 @@
  */
 package com.abhishek.amar.exception;
 
-import org.springframework.http.HttpStatus;
-
 /**
  * @author Abhishek Amar
  *

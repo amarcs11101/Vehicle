@@ -32,7 +32,7 @@ public class VehicleBookController {
 	 * @param bookVehicle
 	 * @return
 	 */
-	@PostMapping()
+	@PostMapping("/save")
 	public ResponseEntity<Object> bookVehicle(@RequestBody BookVehicleEntity bookVehicle) {
 		Response response = new Response(bookService.bookVehicle(bookVehicle), HttpStatus.OK, new Date(),
 				successMessage);
@@ -44,7 +44,7 @@ public class VehicleBookController {
 	 * @param bookVehicle
 	 * @return
 	 */
-	@PutMapping()
+	@PutMapping("/update")
 	public ResponseEntity<Object> updateVehicle(@RequestBody BookVehicleEntity bookVehicle) {
 		Response response = new Response(bookService.bookVehicle(bookVehicle), HttpStatus.OK, new Date(),
 				successMessage);
@@ -67,7 +67,7 @@ public class VehicleBookController {
 	 * 
 	 * @return
 	 */
-	@GetMapping()
+	@GetMapping("/all")
 	public ResponseEntity<Object> getAllBookedVehicle() {
 		Response response = new Response(bookService.findAllVehicle(), HttpStatus.OK, new Date(), successMessage);
 		return new ResponseEntity<>(response, HttpStatus.OK);
@@ -84,4 +84,5 @@ public class VehicleBookController {
 				successMessage);
 		return new ResponseEntity<>(response, HttpStatus.OK);
 	}
+	 
 }

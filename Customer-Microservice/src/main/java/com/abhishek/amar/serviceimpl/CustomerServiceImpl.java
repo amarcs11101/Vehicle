@@ -60,4 +60,10 @@ public class CustomerServiceImpl implements CustomerService {
 		return customerRepo.findById(id);
 	}
 
+	@Override
+	public List<CustomerEntity> getAllActiveDriver() {
+		 
+		return customerRepo.findByIsActiveTrueAndCustomerTypeDriver();
+	}
+
 }

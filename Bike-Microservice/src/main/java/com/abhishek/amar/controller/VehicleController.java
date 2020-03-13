@@ -21,12 +21,18 @@ import com.abhishek.amar.entity.Vehicle;
 import com.abhishek.amar.response.Response;
 import com.abhishek.amar.service.VehicleService;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
+
 /**
  * @author Abhishek Amar
  *
  */
 @RestController
-@RequestMapping("vehicle")
+@RequestMapping("/vehicle")
+@Api(value = "vehicle", description = "Operation related to online vehicle")
 public class VehicleController {
 
 	@Value("${vehicle.save.success}")
@@ -43,7 +49,14 @@ public class VehicleController {
 	 * @param vehicle
 	 * @return
 	 */
-	@PostMapping()
+	@PostMapping("/save")
+	@ApiOperation(value="Save vehicle details",response=ResponseEntity.class)
+	@ApiResponses(value={
+	@ApiResponse(code=200,message="Successfully save vehicle details"),
+	@ApiResponse(code=401,message="Unauthorised Access"),
+	@ApiResponse(code=403,message="forbidden"),
+	@ApiResponse(code=404,message="resource not found")})
+
 	public ResponseEntity<Object> saveVehicleDetails(@RequestBody Vehicle vehicle) {
 		Response response = new Response(vehicleService.save(vehicle), HttpStatus.OK, new Date(),
 				vehicleSuccessMessage);
@@ -54,7 +67,13 @@ public class VehicleController {
 	 * 
 	 * @return
 	 */
-	@GetMapping()
+	@GetMapping("/details")
+	@ApiOperation(value="Get vehicle details",response=ResponseEntity.class)
+	@ApiResponses(value={
+	@ApiResponse(code=200,message="Success"),
+	@ApiResponse(code=401,message="Unauthorised Access"),
+	@ApiResponse(code=403,message="forbidden"),
+	@ApiResponse(code=404,message="resource not found")})
 	public ResponseEntity<Object> getVehicleDetails() {
 		List<Vehicle> list = vehicleService.getAllVehicleDetails();
 		Response response = new Response(list, HttpStatus.OK, new Date(), vehicleSuccessMessage);
@@ -67,6 +86,12 @@ public class VehicleController {
 	 * @return
 	 */
 	@GetMapping("/{vehicleId}")
+	@ApiOperation(value="Get vehicle details by id",response=ResponseEntity.class)
+	@ApiResponses(value={
+	@ApiResponse(code=200,message="Success"),
+	@ApiResponse(code=401,message="Unauthorised Access"),
+	@ApiResponse(code=403,message="forbidden"),
+	@ApiResponse(code=404,message="resource not found")})
 	public ResponseEntity<Object> getVehicleDetailsById(@PathVariable("vehicleId") Integer vehicleId) {
 		Optional<Vehicle> vehicleDetails = vehicleService.getVehicleById(vehicleId);
 		Response response = new Response(vehicleDetails, HttpStatus.OK, new Date(), vehicleSuccessMessage);
@@ -78,6 +103,12 @@ public class VehicleController {
 	 * @param vehicleId
 	 * @return
 	 */
+	@ApiOperation(value="Delete vehicle details",response=ResponseEntity.class)
+	@ApiResponses(value={
+	@ApiResponse(code=200,message="Deleted Successfully"),
+	@ApiResponse(code=401,message="Unauthorised Access"),
+	@ApiResponse(code=403,message="forbidden"),
+	@ApiResponse(code=404,message="resource not found")})
 	@DeleteMapping("/{vehicleId}")
 	public ResponseEntity<Object> deleteVehicleDetailsById(@PathVariable("vehicleId") Integer vehicleId) {
 		vehicleService.deleteVehicleById(vehicleId);
@@ -90,10 +121,17 @@ public class VehicleController {
 	 * @param vehicle
 	 * @return
 	 */
-	@PutMapping()
+	@ApiOperation(value="Update vehicle details",response=ResponseEntity.class)
+	@ApiResponses(value={
+	@ApiResponse(code=200,message="Updated Successfully"),
+	@ApiResponse(code=401,message="Unauthorised Access"),
+	@ApiResponse(code=403,message="forbidden"),
+	@ApiResponse(code=404,message="resource not found")})
+	@PutMapping("/update")
 	public ResponseEntity<Object> updateVehicleDetails(@RequestBody Vehicle vehicle) {
 		Response response = new Response(vehicleService.update(vehicle), HttpStatus.OK, new Date(),
 				vehicleSuccessMessage);
 		return new ResponseEntity<>(response, HttpStatus.OK);
 	}
+
 }
