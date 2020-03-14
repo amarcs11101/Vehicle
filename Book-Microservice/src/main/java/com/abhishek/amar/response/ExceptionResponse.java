@@ -7,19 +7,10 @@ import java.util.Date;
 
 import org.springframework.http.HttpStatus;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
-import lombok.Setter;
-
 /**
  * @author Abhishek Amar
  *
  */
-@Data
-@Setter
-@Getter
 public class ExceptionResponse {
 	private String message;
 	private String statusCode;
