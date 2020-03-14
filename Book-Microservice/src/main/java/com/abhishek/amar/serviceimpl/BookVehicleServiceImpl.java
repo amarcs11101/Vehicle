@@ -43,4 +43,9 @@ public class BookVehicleServiceImpl implements BookVehicleService {
 
 		return repository.findByCustomerId(id);
 	}
+
+	@Override
+	public BookVehicleEntity findById(Integer id) { 
+		return repository.findById(id).get();
+	}
 }

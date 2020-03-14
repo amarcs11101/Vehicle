@@ -1,4 +1,4 @@
-package com.abhishek.amar.exception;
+package com.abhishek.amar.response;
 
 import java.util.Date;
 
@@ -8,15 +8,21 @@ public class ExceptionsResponse {
 	private HttpStatus status;
 	private String message;
 	private Date timeStamp;
+	private String statusCode;
 
-	public ExceptionsResponse() {
-
-	}
-
-	public ExceptionsResponse(HttpStatus status, String message, Date timeStamp) {
+	public ExceptionsResponse(HttpStatus status, String message, Date timeStamp, String statusCode) {
 		this.status = status;
 		this.message = message;
 		this.timeStamp = timeStamp;
+		this.statusCode = statusCode;
+	}
+
+	public String getStatusCode() {
+		return statusCode;
+	}
+
+	public void setStatusCode(String statusCode) {
+		this.statusCode = statusCode;
 	}
 
 	public HttpStatus getStatus() {

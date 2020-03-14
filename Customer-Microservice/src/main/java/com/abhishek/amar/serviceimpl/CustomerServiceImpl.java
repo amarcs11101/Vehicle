@@ -5,7 +5,6 @@ package com.abhishek.amar.serviceimpl;
 
 import java.util.Date;
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -56,13 +55,12 @@ public class CustomerServiceImpl implements CustomerService {
 	}
 
 	@Override
-	public Optional<CustomerEntity> getCustomerDetailsById(Integer id) { 
-		return customerRepo.findById(id);
+	public CustomerEntity getCustomerDetailsById(Integer id) { 
+		return customerRepo.findById(id).get();
 	}
 
 	@Override
-	public List<CustomerEntity> getAllActiveDriver() {
-		 
+	public List<CustomerEntity> getAllActiveDriver() { 
 		return customerRepo.findByIsActiveTrueAndCustomerTypeDriver();
 	}
 

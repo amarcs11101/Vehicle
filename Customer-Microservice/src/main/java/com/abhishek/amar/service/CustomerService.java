@@ -21,7 +21,7 @@ public interface CustomerService {
 
 	public void delete(Integer id);
 
-	public Optional<CustomerEntity> getCustomerDetailsById(Integer id);
-	
+	public CustomerEntity getCustomerDetailsById(Integer id);
+
 	public List<CustomerEntity> getAllActiveDriver();
 }

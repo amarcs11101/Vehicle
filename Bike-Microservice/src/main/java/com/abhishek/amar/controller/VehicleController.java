@@ -31,7 +31,7 @@ import io.swagger.annotations.ApiResponses;
  *
  */
 @RestController
-@RequestMapping("/vehicle")
+@RequestMapping("vehicle")
 @Api(value = "vehicle", description = "Operation related to online vehicle")
 public class VehicleController {
 
