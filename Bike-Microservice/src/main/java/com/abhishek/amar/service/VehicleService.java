@@ -4,7 +4,6 @@
 package com.abhishek.amar.service;
 
 import java.util.List;
-import java.util.Optional;
 
 import com.abhishek.amar.entity.Vehicle;
 
@@ -18,7 +17,7 @@ public interface VehicleService {
 
 	public List<Vehicle> getAllVehicleDetails();
 
-	public Optional<Vehicle> getVehicleById(Integer id);
+	public Vehicle getVehicleById(Integer id);
 
 	public void deleteVehicleById(Integer id);
 

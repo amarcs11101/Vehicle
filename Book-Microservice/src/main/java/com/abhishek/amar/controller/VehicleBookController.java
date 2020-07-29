@@ -2,6 +2,8 @@ package com.abhishek.amar.controller;
 
 import java.util.Date;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
@@ -16,16 +18,30 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.abhishek.amar.entity.BookVehicleEntity;
+import com.abhishek.amar.exception.BookingException;
 import com.abhishek.amar.response.Response;
 import com.abhishek.amar.service.BookVehicleService;
 
 @RestController
 @RequestMapping("/book")
 public class VehicleBookController {
+
 	@Value("${vehicle.book.success}")
 	private String successMessage;
+
 	@Autowired
-	BookVehicleService bookService;
+	private BookVehicleService bookService;
+
+	@Value("${book.data.notfound}")
+	private String dataNotFoundMessage;
+
+	@Value("${book.no.activedriver}")
+	private String noActiveDriver;
+
+	@Value("${book.wrong.payload}")
+	private String somethingWentWrong;
+
+	private Logger logger = LogManager.getLogger();
 
 	/**
 	 * 
@@ -34,9 +50,13 @@ public class VehicleBookController {
 	 */
 	@PostMapping("/save")
 	public ResponseEntity<Object> bookVehicle(@RequestBody BookVehicleEntity bookVehicle) {
-		Response response = new Response(bookService.bookVehicle(bookVehicle), HttpStatus.OK, new Date(),
-				successMessage);
-		return new ResponseEntity<>(response, HttpStatus.OK);
+		try {
+			Response response = new Response(bookService.bookVehicle(bookVehicle), HttpStatus.OK, new Date(),
+					successMessage);
+			return new ResponseEntity<>(response, HttpStatus.OK);
+		} catch (Exception e) {
+			throw new BookingException(somethingWentWrong);
+		}
 	}
 
 	/**
@@ -46,9 +66,17 @@ public class VehicleBookController {
 	 */
 	@PutMapping("/update")
 	public ResponseEntity<Object> updateVehicle(@RequestBody BookVehicleEntity bookVehicle) {
-		Response response = new Response(bookService.bookVehicle(bookVehicle), HttpStatus.OK, new Date(),
-				successMessage);
-		return new ResponseEntity<>(response, HttpStatus.OK);
+		try {
+			if (bookService.findById(bookVehicle.getId()) != null) {
+				Response response = new Response(bookService.bookVehicle(bookVehicle), HttpStatus.OK, new Date(),
+						successMessage);
+				return new ResponseEntity<>(response, HttpStatus.OK);
+			} else {
+				throw new BookingException(dataNotFoundMessage);
+			}
+		} catch (Exception e) {
+			throw new BookingException(somethingWentWrong);
+		}
 	}
 
 	/**
@@ -58,9 +86,13 @@ public class VehicleBookController {
 	 */
 	@DeleteMapping("/{deleteId}")
 	public ResponseEntity<Object> deleteVehicle(@PathVariable("deleteId") Integer deleteId) {
-		bookService.delete(deleteId);
-		Response response = new Response(null, HttpStatus.OK, new Date(), successMessage);
-		return new ResponseEntity<>(response, HttpStatus.OK);
+		try {
+			bookService.delete(deleteId);
+			Response response = new Response(null, HttpStatus.OK, new Date(), successMessage);
+			return new ResponseEntity<>(response, HttpStatus.OK);
+		} catch (Exception e) {
+			throw new BookingException(dataNotFoundMessage);
+		}
 	}
 
 	/**
@@ -69,8 +101,12 @@ public class VehicleBookController {
 	 */
 	@GetMapping("/all")
 	public ResponseEntity<Object> getAllBookedVehicle() {
-		Response response = new Response(bookService.findAllVehicle(), HttpStatus.OK, new Date(), successMessage);
-		return new ResponseEntity<>(response, HttpStatus.OK);
+		try {
+			Response response = new Response(bookService.findAllVehicle(), HttpStatus.OK, new Date(), successMessage);
+			return new ResponseEntity<>(response, HttpStatus.OK);
+		} catch (Exception e) {
+			throw new BookingException(dataNotFoundMessage);
+		}
 	}
 
 	/**
@@ -80,9 +116,17 @@ public class VehicleBookController {
 	 */
 	@GetMapping("/{customerId}")
 	public ResponseEntity<Object> getBookedVehicleByCustomerId(@PathVariable("customerId") Integer customerId) {
-		Response response = new Response(bookService.findByCustomerId(customerId), HttpStatus.OK, new Date(),
-				successMessage);
-		return new ResponseEntity<>(response, HttpStatus.OK);
+		try {
+			BookVehicleEntity entity = bookService.findByCustomerId(customerId);
+			if (entity != null) {
+				Response response = new Response(entity, HttpStatus.OK, new Date(), successMessage);
+				return new ResponseEntity<>(response, HttpStatus.OK);
+			} else {
+				throw new BookingException(dataNotFoundMessage);
+			}
+		} catch (Exception e) {
+			throw new BookingException(dataNotFoundMessage);
+		}
 	}
-	 
+
 }

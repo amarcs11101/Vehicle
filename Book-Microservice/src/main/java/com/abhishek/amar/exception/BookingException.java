@@ -7,9 +7,8 @@ package com.abhishek.amar.exception;
  * @author Abhishek Amar
  *
  */
-public class CustomerExceptions extends RuntimeException {
-	public CustomerExceptions(String message) {
+public class BookingException extends RuntimeException {
+	public BookingException(String message) {
 		super(message);
 	}
-
 }

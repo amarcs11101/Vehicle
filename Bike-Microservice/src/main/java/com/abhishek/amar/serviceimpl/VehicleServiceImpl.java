@@ -4,7 +4,6 @@
 package com.abhishek.amar.serviceimpl;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -29,14 +28,12 @@ public class VehicleServiceImpl implements VehicleService {
 
 	@Override
 	public List<Vehicle> getAllVehicleDetails() {
-		List<Vehicle> list = vehicleRepository.findAll();
-		return list;
+		return vehicleRepository.findAll();
 	}
 
 	@Override
-	public Optional<Vehicle> getVehicleById(Integer id) {
-		Optional<Vehicle> vehicle = vehicleRepository.findById(id);
-		return vehicle;
+	public Vehicle getVehicleById(Integer id) {
+		return vehicleRepository.findById(id).get();
 	}
 
 	@Override
