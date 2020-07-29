@@ -1,0 +1,22 @@
+type Vehicle{
+id : ID!,
+vehicleNumber : String,
+vehicleType : VehicleType,
+vehicleId : Integer,
+owner:[VehicleOwner] 
+}
+
+type VehicleType{
+  BIKE, RIKSAW,CAR,TRUCK, 
+}
+type VehicleOwner{
+id : ID!,
+customerId : Integer,
+vehicleId: Integer,
+createdAt: Date,
+modifiedAt: Date
+}
+
+type Query{
+save(vehicle:Vechicle):void
+}

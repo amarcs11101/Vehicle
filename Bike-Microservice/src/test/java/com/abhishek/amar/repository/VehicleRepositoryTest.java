@@ -51,16 +51,10 @@ class VehicleRepositoryTest {
 	/**
 	 * check below Junit test as its not complete
 	 */
-	@Test
-	void getVehicleByVehicleId() {
-		Vehicle vehicle = new Vehicle();
-		vehicle.setId(35);
-		vehicle.setVehicleId(5);
-		vehicle.setVehicleNumber("BR-888");
-		vehicle.setVehicleType(VehicleType.BIKE);
-		List<Vehicle> vehicleList = new ArrayList<>();
-		vehicleList.add(vehicle);
-	}
+	/*
+	 * @Test void getVehicleByVehicleId() { Integer id = 35; Vehicle vehicle =
+	 * vehicleService.getVehicleById(id); assertEquals(vehicle,null); }
+	 */
 
 	@Test
 	void deleteVehicle() {

@@ -1,0 +1,26 @@
+server:
+  port: 8080
+spring:
+  cloud:
+    gateway:
+      routes:
+      - id: location-app
+        uri: http://localhost:7777/
+        predicates:
+        - Path=/location-app/**
+        
+      - id: customer-app
+        uri: http://localhost:2222/
+        predicates:
+        - Path=/customer-app/**
+        
+      - id: book-app
+        uri: http://localhost:4444/
+        predicates:
+        - Path=/book-app/**
+        
+      - id: bike-app
+        uri: http://localhost:1111/
+        predicates:
+        - Path=/vehicle/**
+         

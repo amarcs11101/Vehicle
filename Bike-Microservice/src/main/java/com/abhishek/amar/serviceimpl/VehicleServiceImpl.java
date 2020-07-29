@@ -28,14 +28,12 @@ public class VehicleServiceImpl implements VehicleService {
 
 	@Override
 	public List<Vehicle> getAllVehicleDetails() {
-		List<Vehicle> list = vehicleRepository.findAll();
-		return list;
+		return vehicleRepository.findAll();
 	}
 
 	@Override
 	public Vehicle getVehicleById(Integer id) {
-		Vehicle vehicle = vehicleRepository.findById(id).get();
-		return vehicle;
+		return vehicleRepository.findById(id).get();
 	}
 
 	@Override

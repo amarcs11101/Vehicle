@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -32,8 +33,8 @@ import io.swagger.annotations.ApiResponses;
  *
  */
 @RestController
-@RequestMapping("vehicle")
-@Api(value = "vehicle", description = "Operation related to online vehicle")
+@RequestMapping("vehicle") 
+@Api(value = "vehicle")
 public class VehicleController {
 
 	@Value("${vehicle.save.success}")
@@ -79,17 +80,16 @@ public class VehicleController {
 	 * 
 	 * @return
 	 */
-	@GetMapping(value = "/details", produces = {MediaType.APPLICATION_JSON_VALUE })
+	@GetMapping(value = "/details", produces = { MediaType.APPLICATION_JSON_VALUE })
 	@ApiOperation(value = "Get vehicle details", response = ResponseEntity.class)
 	@ApiResponses(value = { @ApiResponse(code = 200, message = "Success"),
 			@ApiResponse(code = 401, message = "Unauthorised Access"), @ApiResponse(code = 403, message = "forbidden"),
 			@ApiResponse(code = 404, message = "resource not found") })
-	public List<Vehicle> getVehicleDetails() {
-		Response response = null;
+	public ResponseEntity<Object> getVehicleDetails() {
 		List<Vehicle> list = vehicleService.getAllVehicleDetails();
 		if (!list.isEmpty()) {
-			response = new Response(list, HttpStatus.OK, new Date(), vehicleSuccessMessage);
-			return list;
+			Response response = new Response(list, HttpStatus.OK, new Date(), vehicleSuccessMessage);
+			return new ResponseEntity<>(response, HttpStatus.OK);
 		} else {
 			throw new BikeException(dataNotFoundMessage);
 		}
@@ -100,7 +100,8 @@ public class VehicleController {
 	 * @param vehicleId
 	 * @return
 	 */
-	@GetMapping(value = "/{vehicleId}", produces = {MediaType.APPLICATION_JSON_VALUE })
+	@GetMapping(value = "/{vehicleId}", produces = { MediaType.APPLICATION_JSON_VALUE,
+			MediaType.APPLICATION_JSON_VALUE })
 	@ApiOperation(value = "Get vehicle details by id", response = ResponseEntity.class)
 	@ApiResponses(value = { @ApiResponse(code = 200, message = "Success"),
 			@ApiResponse(code = 401, message = "Unauthorised Access"), @ApiResponse(code = 403, message = "forbidden"),
@@ -129,7 +130,7 @@ public class VehicleController {
 	@ApiResponses(value = { @ApiResponse(code = 200, message = "Deleted Successfully"),
 			@ApiResponse(code = 401, message = "Unauthorised Access"), @ApiResponse(code = 403, message = "forbidden"),
 			@ApiResponse(code = 404, message = "resource not found") })
-	@DeleteMapping(value="/{vehicleId}",produces = {MediaType.APPLICATION_JSON_VALUE})
+	@DeleteMapping(value = "/{vehicleId}", produces = { MediaType.APPLICATION_JSON_VALUE })
 	public ResponseEntity<Object> deleteVehicleDetailsById(@PathVariable("vehicleId") Integer vehicleId) {
 		try {
 			vehicleService.deleteVehicleById(vehicleId);
