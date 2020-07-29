@@ -18,7 +18,7 @@ import org.springframework.web.client.RestTemplate;
  *
  */
 @RestController
-@RequestMapping("/location")
+@RequestMapping("location")
 public class LocationController {
 
 	@Value("${google.location.api}")
