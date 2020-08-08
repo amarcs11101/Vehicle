@@ -2,7 +2,10 @@ server:
   port: 8080
 spring:
   cloud:
-    gateway:
+     gateway:
+      discovery :
+       locator:
+        enabled: true
       routes:
       - id: location-app
         uri: http://localhost:7777/
