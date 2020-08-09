@@ -1,0 +1,390 @@
+                                                                       ---------------------------------------------
+				            Docker  & Kubernates 
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
++                                                        username:    amarcs721992		                                   +
++                                                        password :    Docker@123		                                   +
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
++                                                                           Docs:                                                                        +
++									+
++                                https://kubernetes.io/docs/tasks/tools/install-kubectl/        
++  https://dzone.com/articles/quick-guide-to-microservices-with-kubernetes-sprin
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
++			                Docker Youtube Tutorial			  + 
++		https://www.youtube.com/watch?v=pqux6HO613M			  +
++		https://www.youtube.com/watch?v=EZolJ4lNiYc&feature=youtu.be            +
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
++                                             Plural sight best Tutorial: Search for Below subject line                              +
++		           ==========================================                          +
++		Subject:	    Kubernetes for Developers: Core Concepts               	      +
++                                 By       :          Dan Wahlin (wahline Consulting)                                                     +
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
++                         To check the kubernates with Java follow below url :
++	          ----------------------------------------------------------------------- 
++	          https://www.youtube.com/watch?v=oGxkLH_OAlc  ===> for creating docker hub & push out docker images there 
++	          https://hub.docker.com/  ==> for registering our images to docker hub
++	          https://gorillalogic.com/blog/build-and-deploy-a-spring-boot-app-on-kubernetes-minikube/  ====> Important
++    Google Url : https://gorillalogic.com/blog/build-and-deploy-a-spring-boot-app-on-kubernetes-minikube/ 
++                         https://www.devglan.com/spring-boot/spring-boot-microservices-docker-and-kubernetes
++ 	          https://dzone.com/articles/quick-guide-to-microservices-with-kubernetes-sprin/
++	          https://codefresh.io/howtos/using-docker-maven-maven-docker/
++	          https://medium.com/better-programming/build-push-to-docker-with-maven-eea7c4b8cfa2
++	          https://github.com/spotify/docker-maven-plugin/blob/master/pom.xml
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+                                                        Docker Commands :
+==========================================================================
+1) Kubectl version       : for checking the kuberneters version 
+2) Kubectl cluster-info : View cluster info 
+3) Kubectl get all          : Retrieve info about kubernetes , Pods , Deplymenets , Service, and more 
+4) Kubectl run [container-name] --image =[image-name]
+5) kubectl port-forward [pod] [ports]
+6) kubectl expose ...
+7) kubectl create [resource] : 
+8) kubectl apply [resource]
+9) kubectl --help                    : to get help 
+10) kubectl get pods             : to get all pods details 
+11) kubectl get services        : to get all services running  
+12) kubectl apply -f https://raw.githubusercontent.com/kubernetes/dashboard/v2.0.0/aio/deploy/recommended.yaml  : to deploy dashboard UI
+13) kubectl delete -n default pod application name : to delete a pod  eg: kubectl delete -n default pod bike-app
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Kubernets Contents:
+------------------
+1) Kubernetes Deployment
+2) Rolling Update deployments
+3) Cabary Deployment
+4) Blue - green deployment
+5)Running Jobs and Cronjobs
+6) Performing Monitoring and Troubleshooting tasks
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Docker docs :
+-----------------
+https://kubernetes.io/docs/tasks/access-application-cluster/web-ui-dashboard
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Enable the UI Dashboard 
+-----------------------------
+Steps to enable the UI Dashboard 
+---
+1) kubectl apply [dashboard-yaml-url]  eg: kubectl apply -f https://raw.githubusercontent.com/kubernetes/dashboard/v2.0.0/aio/deploy/recommended.yaml
+2) kubectl describe secret -n kube-system (for getting the token)
+    --> Locate the kubernestes.io/service-account-token and copy the token
+4) Kubectl proxy (to get local url to run the kubernates dashboard in local ....it will generate localhost with some port no. )
+5) Visit the dashboard URL which is below 5)a ....and login using the token which is present in 5)b
+    a) https://kubernetes.io/docs/tasks/access-application-cluster/web-ui-dashboard
+  NOTE: below url can be found on the website described in 5) a
+   b)  http://localhost:8001/api/v1/namespaces/kubernetes-dashboard/services/https:kubernetes-dashboard:/proxy/.
+
+
+Kubernetes Pods Points : 
+---------------------------------
+1) Its Smallest Object of Kubernetes Object Model
+2) Its Environment for Containers
+3) It Organizes application parts like ( server , caching , apis , databases, etc)
+4) Pods Ip , memory , volumes etc are shared across containers 
+5) It scales horizontally by adding Pod replicas
+6) Pods live and die but never come back to life 
+ 
+
+The Roles of Pods
+------------------------
+1) Pods have a unique ip address & containers in the pods have their unique ports 
+2) Pod containers hare the same Network namespace (share IP/Port)
+3) Pod Containers have the same loopback network interface (localhost)
+
+Kubernetes
+===========
+in yaml there will be 2 yaml file 
+1) deployment yaml file (nginx-deployment.yaml)
+2) service yaml file (nginx-service.yaml)
+
+for deploying use command :
+=====================
+ kubectl run springboot-k8s --image=springboot-k8s:1.0 --port=8080 --image-pull-policy=.yaml file name or Never
+
+for creating the service :
+================
+kubectl expose deployment springboot-k8s --type=NodePort ( to provide service to external client)
+
+installing minikube
+==============
+https://kubernetes.io/docs/tasks/tools/install-minikube/
+
+kubernetes sample coding 
+===================
+https://github.com/trisberg/s1p2017-boot-k8s/blob/master/demo-hello.adoc
+
+
+Kubernetes Imp. points:
+==================
+Overall summary is we use to follow below steps :
+
+1) deploy our application first on kubernetes
+    a) deployment can be done using Docker file that we need to generate in our application context path .
+	--> in Docker file related deployment we need to use command to deploy application 
+		& other command to expose our service to outside 
+    			or
+   b) deployment can be done using yaml file present in application context path 
+	--> in yaml file we need to create 1 file for deployment , & other file for services
+
+  
+2) Then expose deployed services 
+3) after following above 2 steps it will give the ip-address 
+    where our service got exposed ... with port no.
+4) These services can be checked using kubctl get service command & pods can be seen using kubctl get all pods commands
+    and then we can do other steps to do loadbalancing and other features of kubernetes .
+
+5) These all status can be seen in the UI Dashboard also  
+=========================================================================================================================
+						100)Deploying application using yaml file
+						---------------------------------------------------
+	**********************************************************************************************************************
+	|Summary:  -          Will Use the Yaml deployment + kubectl = Deployment+ReplicaSet+Pod+container|
+	**********************************************************************************************************************
+
+   # 101) yaml file diff. fields: yaml format that we use to define is as follows , & these files are again divided into
+
+            a) deployment (provides the metadata of deployments):
+               *****************************************************************************
+	apiVersion:apps/v1
+	kind: Deployment ----------------------------------------------> it could be deployment or service. eg. kind : Service or Kind : Deployment
+	metadata:
+	          name : frontend
+	           labels:
+		app:my-nginx
+		tier: frontend 
+            b) Replicaset  (selectors are used to 'select' the template to use (based on labels) present in a)deployments section. Note: the labels tier present in a)Deployments and the matchLavels tier in Replicaset should match )
+                *************************************************************************
+	spec:
+	   selector:
+                         matchLabels:
+		tier:frontend or app:frontend
+                
+           c) Pods (Template to use to create the pod/containers (note that the selector matches the label)
+               ****************************************************************************
+	   template:
+	            metadata:
+		labels:
+		     tier:frontend or app : frontend
+            d) Container :  
+                 ******************************************************************************	             
+	            spec:
+		containers:
+		-name :my-nginx
+		image:nginx:alpine
+		ports:
+		  -containerPort: 8080 or 80
+		resources:
+		   limits:
+		         memory:"128Mi": #128 MB
+		          cpu:"200m" #200 millicpu (.2 cpu or 28% of the cpu)
+
+
+	
+     #102) Create  a deployment using yml file :
+	a) use the kubectl create command along with the --filename or -f switch
+		eg:  
+		       **********************************************************
+		       kubectl create -f file.deployment.yml --save-config
+		       **********************************************************
+
+    #103) Creating or applying changes (an alternate way of creating or apply changes to yaml file ) 
+	Note: Using apply command if that yaml file exists then it will update that file else it will create a new yml file .
+		eg:
+		       **************************************************
+	                         kubectl apply -f file.deployment.yml
+		       ***************************************************
+    #103) Scaling the deployment pods to 5 (imperative) 
+	The scaling of pods horizontally can be done using kubectl command or using yaml file (declarative )
+
+	             eg: a) using kubectl command to scale pods to 5 replicas will be as follow  :-
+		  a1) if we know the deployment name then below command can be used :
+                                      **********************************************************************************
+		     kubectl scale deployment [deployment-name] --replicas=5 
+		   **********************************************************************
+
+		b) Scaling by referencing yaml file :
+		    ***********************************************************
+		     kubectl scale -f file.deployment.yml --replicas=5
+		   ************************************************************
+			or 
+		   add below props. in yaml file under spec in (egno. 101-d) :
+			spec:
+			       replicas:5
+			       selector:
+			          tier : bizrules
+
+
+=====================================================================================================================================================================
+						STEPS TO USE TO DEPLOY APPLICATION TO KUBERNETES USING YML FILE 							           
+=====================================================================================================================================================================
+
+	Before deploying the yml file we need to add all the props. in yaml file as discussed in 101 .
+
+	Then follow below steps :
+		STEP 1:  
+			ADDING YAML FILE INTO THE CLUSTER (using below command)
+			---------------------------------------------------------------------------------------------
+			# a . 	kubectl create -f [YAML FILE NAME] --save-config 
+					eg. suppose the yml file name is abhishek.deployment.yml then 	use below command 
+				
+						kubectl create abhishek.deployment.yml --save-config 
+
+		STEP 2:
+			CHECK HOW MANY PODS GOT CREATED (using command)
+			#a. kubectl get pods 
+			Note: after using above command it will show all the pods created with name as app name that we defined in abhishek.deployment.yml file egNo. 101-a
+
+		STEP 3:
+			If we wanna change the replicas no. from 2 to 4  then got to yml file again and change the values in yml file and use below command to update the PODS details .
+			#a. kubectl apply -f [yaml file name]   (apply command is used to take changed values from yml file if its present or else it will create new replica with fresh values )
+
+
+==================================================================================================================================================================
+						STEPS TO USE DOCKER WITH KUBERNETES FOR MICROSERVICES IN ECLIPSE
+==================================================================================================================================================================
+	1) create microservice project using spring boot 	
+	2) create a Dockerfile in the context path of the project .
+		add below props. in Dockerfile :
+		-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+			FROM openjdk:8-jdk-alpine
+			VOLUME /tmp
+			COPY target/*.jar docker-maven-comparison:0.0.1-SNAPSHOT.jar
+			ENTRYPOINT ["java","-Djava.security.egd=file:/dev/./urandom","-jar","/Kubernetes-app-1:0.0.1-SNAPSHOT"]
+			EXPOSE 8080
+	----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+	3) add below properties in pom.xml file :
+	-----------------------------	-----------------------------------------------------------------------------------------------------------------------------------------------------------------
+	  <build>
+		<plugins>
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+			</plugin>
+			<plugin>
+				<groupId>com.spotify</groupId>
+				<artifactId>dockerfile-maven-plugin</artifactId>
+				<version>1.4.3</version>
+				<executions>
+					<execution>
+						<id>default</id>
+						<goals>
+							<goal>build</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<!-- <repository>docker.io/kubernetes-app</repository> -->
+					<repository>docker.io/amarcs721992/kubernetes123</repository>
+					<!-- <repository>localhub.internal/library/centos7-oracle-java</repository> -->
+					<tag>${project.version}</tag>
+					<username>amarcs721992</username>
+					<password>Docker@123</password>
+					<tag>${project.version}</tag>
+				</configuration> 
+			</plugin>
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+				<configuration>
+					<mainClass>com.abhishek.amar.KubernetesAppApplication</mainClass>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+	-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+	4) Right click on project --> run as ---> maven clean
+	         if the output in console is BUID SUCCESS then follow 5th step
+	5) Right click on project --> run as --> maven install 
+	        if the output in console is BUILD SUCCESS then follow 6th step
+	6) Run docker login in cmd (if its success then it will show message on cmd)
+	7) Go to https://hub.docker.com/ and create a repository 
+	
+	8) add the created repository name in the pom.xml file like below :-
+		for example : if the created repository name on docker is : kubernetes123 & my docker username is amarcs1991 then 
+			the repository tag present in the below configuration tag would be : docker.io/amarcs721991/kubernetes123   ie. docker.io/dockerusername/docker repository name
+
+		the complete tag with repository name is as below :
+	
+		<configuration>
+			<repository>docker.io/amarcs721992/kubernetes123</repository>
+			<tag>${project.version}</tag>
+			<username>amarcs721992</username>
+			<password>Docker@123</password>
+			<tag>${project.version}</tag>
+		 </configuration>
+		
+		
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+		
+
+
+		   
+			
+			
+		
+
+			
+
+
+
+
+
+
+
+
+
+
+
+
+
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  			
+
+
+
