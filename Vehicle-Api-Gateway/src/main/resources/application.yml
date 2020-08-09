@@ -2,12 +2,15 @@ server:
   port: 8080
 spring:
   cloud:
-    gateway:
+     gateway:
+      discovery :
+       locator:
+        enabled: true
       routes:
       - id: location-app
         uri: http://localhost:7777/
         predicates:
-        - Path=/location-app/**
+        - Path=/location/**
         
       - id: customer-app
         uri: http://localhost:2222/
