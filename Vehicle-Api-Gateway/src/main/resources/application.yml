@@ -15,15 +15,17 @@ spring:
       - id: customer-app
         uri: http://localhost:2222/
         predicates:
-        - Path=/customer-app/**
+        - Path=/customer/**
         
       - id: book-app
         uri: http://localhost:4444/
         predicates:
-        - Path=/book-app/**
+        - Path=/book/**
         
       - id: bike-app
         uri: http://localhost:1111/
         predicates:
-        - Path=/vehicle/**
+        - Path=/vehicle/**  
+        
+        
          

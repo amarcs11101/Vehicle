@@ -8,7 +8,9 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.abhishek.amar.entity.Routine;
 import com.abhishek.amar.entity.Vehicle;
+import com.abhishek.amar.repository.RoutineRepository;
 import com.abhishek.amar.repository.VehicleRepository;
 import com.abhishek.amar.service.VehicleService;
 
@@ -20,6 +22,9 @@ import com.abhishek.amar.service.VehicleService;
 public class VehicleServiceImpl implements VehicleService {
 	@Autowired
 	private VehicleRepository vehicleRepository;
+	
+	@Autowired
+	private RoutineRepository routineRepository;
 
 	@Override
 	public Vehicle save(Vehicle vehicleBean) {
@@ -44,6 +49,11 @@ public class VehicleServiceImpl implements VehicleService {
 	@Override
 	public Vehicle update(Vehicle vehicle) {
 		return vehicleRepository.save(vehicle);
+	}
+
+	@Override
+	public List<Routine> vehicleCount() {		
+		return routineRepository.findAll();
 	}
 
 }

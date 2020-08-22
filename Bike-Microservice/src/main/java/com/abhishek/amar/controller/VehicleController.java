@@ -1,5 +1,6 @@
 package com.abhishek.amar.controller;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.abhishek.amar.beans.DemoBean;
 import com.abhishek.amar.entity.Vehicle;
 import com.abhishek.amar.exception.BikeException;
 import com.abhishek.amar.response.Response;
@@ -33,8 +35,9 @@ import io.swagger.annotations.ApiResponses;
  *
  */
 @RestController
+@CrossOrigin("*")
 @RequestMapping("vehicle") 
-@Api(value = "vehicle")
+@Api(value = "vehicle")  
 public class VehicleController {
 
 	@Value("${vehicle.save.success}")
@@ -157,6 +160,26 @@ public class VehicleController {
 			Vehicle vehicleDetails = vehicleService.getVehicleById(vehicle.getId());
 			if (vehicleDetails != null) {
 				response = new Response(vehicleService.update(vehicle), HttpStatus.OK, new Date(),
+						vehicleSuccessMessage);
+				return new ResponseEntity<>(response, HttpStatus.OK);
+			} else {
+				throw new BikeException(dataNotFoundMessage);
+			}
+		} catch (Exception e) {
+			throw new BikeException(somethingWentWrong);
+		}
+	}
+	
+	@ApiOperation(value = "count vehicle details", response = ResponseEntity.class)
+	@ApiResponses(value = { @ApiResponse(code = 200, message = "count Successfully"),
+			@ApiResponse(code = 401, message = "Unauthorised Access"), @ApiResponse(code = 403, message = "forbidden"),
+			@ApiResponse(code = 404, message = "resource not found") })
+	@GetMapping(value = "/count", produces = { MediaType.APPLICATION_JSON_VALUE })
+	public ResponseEntity<Object> cout() {
+		try { 
+			Response response = null; 
+			if (!vehicleService.vehicleCount().isEmpty()) {
+				response = new Response(vehicleService.vehicleCount(), HttpStatus.OK, new Date(),
 						vehicleSuccessMessage);
 				return new ResponseEntity<>(response, HttpStatus.OK);
 			} else {

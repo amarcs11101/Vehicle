@@ -11,7 +11,7 @@
 	</parent>
 	<groupId>com.abhishek.amar</groupId>
 	<artifactId>Kubernetes-app-1</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>micro-v1</version>
 	<name>Kubernetes-app-1</name>
 	<description>Kubernetes-app</description>
 
@@ -47,11 +47,7 @@
 		</dependency>
 	</dependencies> 
 	<build>
-		<plugins>
-			<plugin>
-				<groupId>org.springframework.boot</groupId>
-				<artifactId>spring-boot-maven-plugin</artifactId>
-			</plugin>
+		<plugins> 
 			<plugin>
 				<groupId>com.spotify</groupId>
 				<artifactId>dockerfile-maven-plugin</artifactId>
@@ -65,18 +61,20 @@
 					</execution>
 				</executions>
 				<configuration>
-					<repository>docker.io/kubernetes-app</repository>
+					<repository>docker.io/amarcs721992/microservice-1</repository>
 					<tag>${project.version}</tag>
 					<username>amarcs721992</username>
-					<password>Docker@123</password>
-					<tag>${project.version}</tag>
+					<password>Docker@123</password> 
+					<!-- <buildArgs>
+						<JAR_FILE>target/${project.build.finalName}.jar</JAR_FILE>
+					</buildArgs> -->
 				</configuration> 
 			</plugin>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 				<configuration>
-					<mainClass>com.abhishek.amar.KubernetesAppApplication</mainClass>
+					<mainClass>com.abhishek.amar.KubernetesApp1Application</mainClass>
 				</configuration>
 			</plugin>
 		</plugins>

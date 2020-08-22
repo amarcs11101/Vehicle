@@ -4,8 +4,8 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.javainuse</groupId>
-	<artifactId>cloud-gateway-service</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<artifactId>api-gateway</artifactId>
+	<version>latest</version>
 	<name>gateway-service</name>
 
 	<properties>
@@ -33,7 +33,19 @@
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-devtools</artifactId>
 			</dependency>
+			<!-- https://mvnrepository.com/artifact/org.springframework/spring-webmvc -->
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-webmvc</artifactId>
+				<version>3.1.1.RELEASE</version>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-starter-security</artifactId>
+			</dependency>
+
 		</dependencies>
+
 	</dependencyManagement>
 	<repositories>
 		<repository>
@@ -45,26 +57,29 @@
 	<build>
 		<plugins>
 			<plugin>
-				<groupId>com.spotify</groupId>
-				<artifactId>docker-maven-plugin</artifactId> 
-				<configuration>
-					<imageName>vehicle-api-gateway</imageName>
-					<baseImage>java</baseImage>
-					<entryPoint>["java", "-jar", "/${project.build.finalName}.jar"]</entryPoint>
-					<!-- copy the service's jar file from target into the root directory 
-						of the image -->
-					<resources>
-						<resource>
-							<targetPath>/</targetPath>
-							<directory>${project.build.directory}</directory>
-							<include>${project.build.finalName}.jar</include>
-						</resource>
-					</resources>
-				</configuration>
-			</plugin>
-			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
+			</plugin>
+			<plugin>
+				<groupId>com.spotify</groupId>
+				<artifactId>dockerfile-maven-plugin</artifactId>
+				<version>1.4.3</version>
+				<executions>
+					<execution>
+						<id>default</id>
+						<goals>
+							<goal>build</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<repository>docker.io/amarcs721992/api-gateway</repository>
+					<tag>${project.version}</tag>
+					<username>amarcs721992</username>
+					<password>Docker@123</password>
+					<!-- <buildArgs> <JAR_FILE>target/${project.build.finalName}.jar</JAR_FILE> 
+						</buildArgs> -->
+				</configuration>
 			</plugin>
 		</plugins>
 	</build>

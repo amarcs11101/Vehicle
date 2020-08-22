@@ -30,7 +30,7 @@ import com.abhishek.amar.service.CustomerService;
  *
  */
 @RestController
-@RequestMapping(value = "/customer")
+@RequestMapping(value = "customer")
 public class CustomerController {
 	@Autowired
 	private CustomerService customerService;

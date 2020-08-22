@@ -5,6 +5,7 @@ package com.abhishek.amar.service;
 
 import java.util.List;
 
+import com.abhishek.amar.entity.Routine;
 import com.abhishek.amar.entity.Vehicle;
 
 /**
@@ -22,4 +23,6 @@ public interface VehicleService {
 	public void deleteVehicleById(Integer id);
 
 	public Vehicle update(Vehicle vehicle);
+	
+	public List<Routine> vehicleCount();
 }

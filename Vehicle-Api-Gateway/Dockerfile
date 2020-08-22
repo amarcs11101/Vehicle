@@ -11,8 +11,8 @@
 #EXPOSE 8080
 
 FROM openjdk:8
-ADD target/Bike-Microservice-0.0.1-SNAPSHOT.jar Bike-Microservice-0.0.1-SNAPSHOT.jar
-EXPOSE 8089
-ENTRYPOINT ["java","-jar","Bike-Microservice-0.0.1-SNAPSHOT.jar"]
+ADD target/api-gateway-latest.jar api-gateway-latest.jar
+EXPOSE 8087
+ENTRYPOINT ["java","-jar","api-gateway-latest.jar"]
 
  
